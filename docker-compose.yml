@@ -1,0 +1,35 @@
+version: '3'
+services: 
+  kong:
+    image: kong:${TAG-latest}
+    container_name: kong-dbless
+    env_file: 
+      - kong.env
+    volumes: 
+      - ./kong.yaml:/config/kong.yaml
+    ports: 
+      - 127.0.0.1:8001:8001
+      - 127.0.0.1:8444:8444
+      - 8000:8000
+      - 8443:8443
+    healthcheck:
+      test: ["CMD", "kong", "health"]
+      interval: 5s
+      timeout: 2s
+      retries: 15
+    networks: 
+      app_net:
+        ipv4_address: 192.168.111.100
+  
+  api:
+    build: ./api
+    networks: 
+      app_net:
+        ipv4_address: 192.168.111.101
+
+networks:
+  app_net:
+    ipam: 
+      driver: default
+      config:
+        - subnet: "192.168.111.0/24"

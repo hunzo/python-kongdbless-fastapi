@@ -1,0 +1,25 @@
+_format_version: "2.1"
+
+services:
+# enable plugin on service
+- name: my-key-auth-service
+  url: http://192.168.111.101:8000
+  
+  plugins:
+  - name: key-auth
+    service: my-key-auth-service
+    enabled: true
+    config:
+      key_names:
+      - x-api-key
+
+  routes:
+  - name: my-key-auth-router
+    service: my-key-auth-service
+    paths:
+    - /api
+
+consumers:
+- username: login_key_auth
+  keyauth_credentials:
+  - key: my-key
