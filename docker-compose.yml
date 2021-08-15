@@ -21,11 +21,31 @@ services:
       app_net:
         ipv4_address: 192.168.111.100
   
-  api:
+  api-1:
     build: ./api
     networks: 
       app_net:
         ipv4_address: 192.168.111.101
+
+  api-2:
+    build: ./api
+    networks: 
+      app_net:
+        ipv4_address: 192.168.111.102
+
+  api-3:
+    build: ./api
+    networks: 
+      app_net:
+        ipv4_address: 192.168.111.103
+
+  api-4:
+    build: ./api
+    networks: 
+      app_net:
+        ipv4_address: 192.168.111.104
+
+
 
 networks:
   app_net:

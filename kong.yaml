@@ -3,7 +3,8 @@ _format_version: "2.1"
 services:
 # enable plugin on service
 - name: my-key-auth-service
-  url: http://192.168.111.101:8000
+  # url: http://192.168.111.101:8000
+  host: upstream-servers
   
   plugins:
   - name: key-auth
@@ -23,3 +24,16 @@ consumers:
 - username: login_key_auth
   keyauth_credentials:
   - key: my-key
+
+upstreams:
+- name: upstream-servers
+  targets:
+    - target: 192.168.111.101:8000
+      weight: 100
+    - target: 192.168.111.102:8000
+      weight: 100
+    - target: 192.168.111.103:8000
+      weight: 100
+    - target: 192.168.111.104:8000
+      weight: 100
+ 
